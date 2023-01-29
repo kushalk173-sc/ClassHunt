@@ -1,0 +1,57 @@
+<script>
+    function myFunction() {
+        var input=document.getElementById("mysearch").value;
+        localStorage.setItem("search", input);
+        window.open("page2.html");    
+    }
+
+    
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ClassHunt</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="layer">
+            <div class="header">
+                <h1>
+                    <span>Find</span>
+                    <span>the</span>
+                    <span>courses</span>
+                    <span>you</span>
+                    <span>want</span>
+                    <span>with</span>
+                    <span>CourseHunt.</span>
+                </h1>
+            </div>
+       
+            <div class="search">
+                <div class="icon"></div>
+                <div class="input">
+                    <form onsubmit="myFunction()" autocomplete="off" method="POST" id="myform">
+                        <input type="text" placeholder="Enter your interests here..." id="mysearch">
+                    </form>
+
+                    <p>
+                        <span id = mysearch></span>
+                    </p>
+
+                </div>
+                <script>
+                    const icon=document.querySelector('.icon');
+                    const search=document.querySelector('.search');
+                    icon.onclick = function(){
+                        search.classList.toggle('active')
+                    }
+                </script>
+                
+
+                <span class="clear" onclick="document.getElementById('mysearch').value = ''"></span>
+            </div>
+        </div>
+    </body>
+</html>

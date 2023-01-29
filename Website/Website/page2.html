@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ClassHunt</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>        
+        <div class="layer" style="height: auto;">
+            <div class="header">
+                <h1>
+                    Recommended courses for <br>' <span id="search", style="font-style: oblique;"></span> ' :
+                </h1>
+            </div>   
+            
+            <script>
+                var input = localStorage.getItem("search");
+                var inp = input.replaceAll(",", "").replaceAll(" ", "%20");
+                document.getElementById("search").innerHTML = input;
+                console.log(inp);
+                var link = "https://helloworld-lyiim2vm7a-ue.a.run.app/interests?str=" + inp;
+                console.log(link);
+            </script>
+
+            <script>
+                const courses = [];
+                const course_title = [];
+                const course_disc = [];
+                const course_link = [];
+                const course_sim = [];
+            </script>
+
+            <script> 
+                function removeQuote(str) {
+                    for (let j = 0; j < str.length; j++) {
+                        if (str.charAt(j) == '"') {
+                            str = str.substring(0, j) + str.substring(j+1)
+                        }
+                    }
+                    return str
+                }
+
+                var course_string;
+            
+                fetch(link)
+                    .then((response) => response.json())
+                    .then((json) => {
+                        for (let i = 0; i<5; i++) {
+                            courses[i]=json[i];
+                            course_string = JSON.stringify(courses[i]);
+                            course_string = course_string.replace("Cross-listed with: ", " Cross-listed with - ");
+                            course_string = course_string.replace("Prerequisite: ", " Prerequisite - ");
+                            const course_string_array = course_string.split(':');
+                            console.log(course_string_array);
+                            
+                            var cd = removeQuote(course_string_array[1]);
+                            course_disc[i] = cd.replace(",course_name", "");
+                            console.log(course_disc[i]);
+            
+                            var full_title = removeQuote(course_string_array[2]);
+                            var title = full_title.split('(');
+                            full_title = title[0].trim(); 
+                            full_title = full_title.replace(" ", " - ");
+                            course_title[i] = full_title;
+                            title = full_title.split('-');
+                            course_link[i] = "https://app.testudo.umd.edu/soc/search?courseId="+title[0].trim()+"&sectionId=&termId=202301&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on"
+                            course_sim[i] = course_string_array[course_string_array.length-1].replace("}", "");
+            
+                            console.log(course_link[i]);
+                            console.log(course_title[i]);
+                            console.log(course_sim[i]);
+            
+                            var checked = false;
+                            if (course_sim[0] == 0 || checked) {
+                                checked = true;
+                                window.location.replace("unavailable.html");
+                            }
+                            
+                            for (let j = 0; j < 5; j++){
+                                var y = course_title[j];
+                                var z = course_disc[j];
+                                var titles = "title"+j;
+                                var disc = "disc"+j;
+                                document.getElementById(titles).innerHTML = y;
+                                document.getElementById(disc).innerHTML = z;
+                            }
+                            
+                        }
+
+                    const form = new FormData();
+                    form.append('chain', 'goerli');
+                    form.append('contractType', 'nft721');
+                    form.append('contractSymbol', 'SampleName');
+                    form.append('contractName', course_string);
+    
+                    const options = {method: 'POST', headers: {accept: 'application/json'}};
+    
+                    options.body = form;
+    
+                    fetch('https://api.verbwire.com/v1/nft/deploy/deploySimpleContract', options)
+                        .then(response => response.json())
+                        .then(response => console.log(response))
+                        .catch(err => console.error(err));
+
+                });
+                
+            </script>
+
+            <script>
+                function sendFunction() {
+                    alert("This will send a secure message via a smart contact to the university using the Verbwire API");
+                }
+            </script>
+
+            <div class="course">
+                <p style="font-weight: bold; margin-top:0"><span id="title0"></span></p>
+                <p><span id="disc0"></span></p>
+                <button type="button" id="send" onclick="sendFunction()">Send Data</button>
+            </div>
+
+            <div class="course">
+                <p style="font-weight: bold; margin-top:0"><span id="title1"></span></p>
+                <p><span id="disc1"></span></p>
+                <button type="button" id="send" onclick="sendFunction()">Send Data</button>
+            </div>
+
+            <div class="course">
+                <p style="font-weight: bold; margin-top:0"><span id="title2"></span></p>
+                <p><span id="disc2"></span></p>
+                <button type="button" id="send" onclick="sendFunction()">Send Data</button>
+            </div>
+
+            <div class="course">
+                <p style="font-weight: bold; margin-top:0"><span id="title3"></span></p>
+                <p><span id="disc3"></span></p>
+                <button type="button" id="send" onclick="sendFunction()">Send Data</button>
+            </div>
+
+            <div class="course" style="margin-bottom: 50px;">
+                <p style="font-weight: bold; margin-top:0"><span id="title4"></span></p>
+                <p><span id="disc4"></span></p>
+                <button type="button" id="send" onclick="sendFunction()">Send Data</button>
+            </div>
+
+        </div>
+    </body>
+</html>

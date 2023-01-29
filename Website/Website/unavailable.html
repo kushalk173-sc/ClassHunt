@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ClassHunt</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        
+        <div class="layer" style="height: auto;">
+            <div class="header">
+                <h1>
+                    Recommended courses for <br>' <span id="search", style="font-style: oblique;"></span> ' :
+                </h1>
+            </div>
+
+            <script>
+                
+                var input = localStorage.getItem("search");
+                var inp = input.replaceAll(",", "").replaceAll(" ", "_");
+                document.getElementById("search").innerHTML = input;
+                console.log(inp);
+                var link = "https://helloworld-lyiim2vm7a-ue.a.run.app/interests?str=" + inp;
+                console.log(link);
+            </script>
+
+            <div class="course">
+                <h3 style="font-weight: bold; margin-top:0">Recommendations unavailable. Try again with different parameters.</h3>
+                
+            </div>
+        </div>
+    </body>
+</html>
